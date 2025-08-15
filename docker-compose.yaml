@@ -5,6 +5,13 @@ services:
     container_name: printmipt_api
     restart: unless-stopped
     user: ${CURRENT_UID}
+    tty: true
+    stdin_open: true
+
+    expose:
+      - "4444"
+    networks:
+      - default
 
     volumes:
       - type: bind
@@ -16,3 +23,21 @@ services:
 
     working_dir: /printmipt_api
     command: python3 app.py
+
+#  caddy:
+#    image: caddy:latest
+#    ports:
+#       - "8080:80"    # HTTP → 8080
+#       - "4444:443"   # HTTPS → 4444
+#    volumes:
+#      - ./Caddyfile:/etc/caddy/Caddyfile
+#      - caddy_data:/data
+#    networks:
+#      - default
+
+# networks:
+#  default:
+# volumes:
+#  caddy_data:
+
+

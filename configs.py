@@ -1,7 +1,7 @@
 import pathlib
 
 API_KEYS = {
-    "PrintMIPT": 'API Key'
+    "PrintMIPT": 'API key'
 }
 
 logger_name = 'PrintMIPT_API'

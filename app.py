@@ -212,4 +212,4 @@ if __name__ == '__main__':
     setup_logger(logger)
     setup_database(DB_PATH)
     app.config['DB_PATH'] = DB_PATH
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=4444)
