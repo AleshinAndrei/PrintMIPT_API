@@ -4,5 +4,5 @@
 /.db.lnk
 /.venv/
 /.idea
-/__pycache__/
 /.gitignore
+/__pycache__/
