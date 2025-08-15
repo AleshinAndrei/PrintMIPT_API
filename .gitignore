@@ -1,0 +1,6 @@
+/logs/
+/.db/
+/.db
+/.db.lnk
+/.venv/
+/.idea

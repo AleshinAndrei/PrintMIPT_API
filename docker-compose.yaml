@@ -1,0 +1,18 @@
+services:
+  printmipt_api:
+    build: .
+    image: printmipt_api
+    container_name: printmipt_api
+    restart: unless-stopped
+    user: ${CURRENT_UID}
+
+    volumes:
+      - type: bind
+        source: .db
+        target: /printmipt_api/.db
+      - type: bind
+        source: .
+        target: /printmipt_api
+
+    working_dir: /printmipt_api
+    command: python3 app.py
