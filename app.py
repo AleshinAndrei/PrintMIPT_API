@@ -142,7 +142,7 @@ def record_printing():
         return jsonify({"error": "No data provided"}), 400
 
     # Проверка обязательных полей
-    required_fields = ['email', 'amount']
+    required_fields = ['email', 'full_amount', 'discount_amount']
     missing_fields = [field for field in required_fields if field not in data]
     if missing_fields:
         return jsonify({
@@ -151,7 +151,8 @@ def record_printing():
         }), 400
 
     email = data['email']
-    amount = data['amount']
+    full_amount = data['full_amount']
+    discount_amount = data['discount_amount']
     page_count = data.get('page_count')
     is_color = data.get('is_color')
     task_number = data.get('task_number')
@@ -160,7 +161,8 @@ def record_printing():
     if not isinstance(email, str) or not email_verify(email):
         return jsonify({"error": "Invalid email format. Use email@phystech.edu"}), 400
 
-    if not isinstance(amount, (int, float)) or amount < 0:
+    if not isinstance(full_amount, (int, float)) or full_amount < 0 or \
+       not isinstance(discount_amount, (int, float)) or discount_amount < 0:
         return jsonify({"error": "Amount must be a positive number"}), 400
 
     if page_count and (not isinstance(page_count, int) or page_count < 1):
@@ -178,16 +180,17 @@ def record_printing():
 
         cursor.execute(
             """INSERT INTO printing_logs 
-            (email, amount, page_count, is_color, task_number) 
-            VALUES (?, ?, ?, ?, ?)""",
-            (email, amount, page_count, is_color, str(task_number))
+            (email, full_amount, discount_amount, page_count, is_color, task_number) 
+            VALUES (?, ?, ?, ?, ?, ?)""",
+            (email, full_amount, discount_amount, page_count, is_color, str(task_number))
         )
 
         return jsonify({
             "success": True,
             "record": {
                 "email": email,
-                "amount": amount,
+                "full_amount": full_amount,
+                "discount_amount": discount_amount,
                 "page_count": page_count,
                 "is_color": is_color,
                 "task_number": task_number
