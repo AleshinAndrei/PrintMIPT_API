@@ -19,15 +19,15 @@ def email_verify(email: str):
 
 def api_key_required(f):
     @wraps(f)
-    def decorated_function(*args, **kwargs):
+    def api_key_check(*args, **kwargs):
         api_key = request.headers.get('API-Key')
         if api_key not in API_KEYS.values():
-            logger.error(f'Invalid API Key: {api_key}, ip: {request.remote_addr}')
+            logger.warning(f'Invalid API Key: {api_key}, ip: {request.remote_addr}')
             return jsonify({"error": "Invalid API key"}), 401
         response = f(*args, **kwargs)
         return response
 
-    return decorated_function
+    return api_key_check
 
 
 @app.route('/membership', methods=['GET'])
